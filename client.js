@@ -6,12 +6,13 @@
   if (typeof window === "undefined" || !window.__ModuleLoader__) return;
 
   var ID = "dsh-pet-prince";
-  var SPRITE = "/dsh-pet-prince/spritesheet.webp?v=2";
+  var SPRITE = "/dsh-pet-prince/spritesheet.webp?v=3";
   var CONFIG_URL = "/dsh-pet-prince/config";
   var POS_KEY = "dsh-pet-prince:position";
 
-  var FRAME_W = 192;
-  var FRAME_H = 208;
+  var FRAME_W = 384;
+  var FRAME_H = 416;
+  var DISPLAY = 0.78;
   var COLS = 8;
   var ROWS = 9;
 
@@ -31,9 +32,15 @@
 
   var CSS = [
     ".dpp-root{position:fixed;z-index:40;pointer-events:none;user-select:none}",
-    ".dpp-sprite{pointer-events:auto;cursor:grab;background-repeat:no-repeat;image-rendering:auto;touch-action:none;filter:drop-shadow(0 8px 14px rgba(3,8,20,.35));transition:filter .15s ease}",
+    ".dpp-sprite{pointer-events:auto;cursor:grab;background-repeat:no-repeat;image-rendering:auto;touch-action:none;filter:drop-shadow(0 8px 14px rgba(3,8,20,.35));transition:filter .15s ease;animation:dpp-float 3.2s ease-in-out infinite}",
+    "@keyframes dpp-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}",
     ".dpp-sprite:hover{filter:drop-shadow(0 10px 18px rgba(3,8,20,.5)) brightness(1.03)}",
     ".dpp-sprite:active{cursor:grabbing}",
+    ".dpp-toolbar{position:absolute;left:50%;top:-42px;transform:translateX(-50%);display:flex;gap:2px;padding:4px;border:1px solid var(--dsw-alias-border-l2,#34415e);border-radius:10px;background:var(--dsw-alias-bg-layer-1,#111b33);box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:.92;pointer-events:auto;transition:opacity .15s ease}",
+    ".dpp-root:hover .dpp-toolbar{opacity:1}",
+    ".dpp-toolbar button{padding:4px 8px;border:0;border-radius:6px;background:transparent;color:var(--dsw-alias-label-primary,#e8eefc);font:inherit;font-size:12px;white-space:nowrap;cursor:pointer}",
+    ".dpp-toolbar button:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,.08))}",
+    "@media (prefers-reduced-motion: reduce){.dpp-sprite{animation:none}}",
     ".dpp-menu{position:fixed;z-index:10000;min-width:148px;padding:6px;border:1px solid var(--dsw-alias-border-l2,#34415e);border-radius:10px;background:var(--dsw-alias-bg-layer-1,#111b33);box-shadow:0 12px 32px rgba(0,0,0,.45);backdrop-filter:blur(10px)}",
     ".dpp-menu-title{padding:4px 8px 6px;font-size:11px;color:var(--dsw-alias-label-tertiary,#8291b3);letter-spacing:.08em}",
     ".dpp-menu button{display:flex;align-items:center;width:100%;padding:6px 8px;border:0;border-radius:6px;background:transparent;color:var(--dsw-alias-label-primary,#e8eefc);font:inherit;font-size:13px;text-align:left;cursor:pointer}",
@@ -129,7 +136,7 @@
       var state = props.state;
       var frame = props.frame;
       var spec = ANIM[state] || ANIM.idle;
-      var scale = cfg.scale || 1;
+      var scale = (cfg.scale || 1) * DISPLAY;
       var width = FRAME_W * scale;
       var height = FRAME_H * scale;
       return h("div", {
@@ -279,7 +286,7 @@
 
       if (!cfg || !cfg.enabled) return null;
 
-      var scale = cfg.scale || 1;
+      var scale = (cfg.scale || 1) * DISPLAY;
       var sizeW = FRAME_W * scale;
       var sizeH = FRAME_H * scale;
       var rootStyle = {
@@ -369,6 +376,14 @@
       return h(
         "div",
         { className: "dpp-root", style: rootStyle, "data-pet": "whale-prince" },
+        h(
+          "div",
+          { className: "dpp-toolbar" },
+          h("button", { type: "button", onClick: function () { action("waving"); } }, "挥手"),
+          h("button", { type: "button", onClick: function () { action("jumping"); } }, "跳跃"),
+          h("button", { type: "button", onClick: function () { action("waiting"); } }, "等待"),
+          h("button", { type: "button", onClick: hide }, "隐藏"),
+        ),
         h(SpriteFrame, {
           cfg: cfg,
           state: state,
