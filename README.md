@@ -5,6 +5,8 @@
 
 ![preview](docs/preview.gif)
 
+![透明人物 2x](docs/prince-transparent-2x.png)
+
 ![三视图](docs/threeview.png)
 
 ## 功能
