@@ -31,13 +31,13 @@
   var DEFAULTS = { enabled: true, scale: 1, corner: "bottom-right", marginX: 24, marginY: 16 };
 
   var CSS = [
-    ".dpp-root{position:fixed;z-index:40;pointer-events:none;user-select:none}",
+    ".dpp-root{position:fixed;z-index:1000;pointer-events:none;user-select:none}",
     ".dpp-sprite{pointer-events:auto;cursor:grab;background-repeat:no-repeat;image-rendering:auto;touch-action:none;filter:drop-shadow(0 8px 14px rgba(3,8,20,.35));transition:filter .15s ease;animation:dpp-float 3.2s ease-in-out infinite}",
     "@keyframes dpp-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}",
     ".dpp-sprite:hover{filter:drop-shadow(0 10px 18px rgba(3,8,20,.5)) brightness(1.03)}",
     ".dpp-sprite:active{cursor:grabbing}",
     "@media (prefers-reduced-motion: reduce){.dpp-sprite{animation:none}}",
-    ".dpp-menu{position:fixed;z-index:10000;min-width:148px;padding:6px;border:1px solid var(--dsw-alias-border-l2,#34415e);border-radius:10px;background:var(--dsw-alias-bg-layer-1,#111b33);box-shadow:0 12px 32px rgba(0,0,0,.45);backdrop-filter:blur(10px)}",
+    ".dpp-menu{position:fixed;z-index:10000;min-width:148px;padding:6px;border:1px solid var(--dsw-alias-border-l2,#34415e);border-radius:10px;background:var(--dsw-alias-bg-layer-1,#111b33);box-shadow:0 12px 32px rgba(0,0,0,.45);backdrop-filter:blur(10px);pointer-events:auto}",
     ".dpp-menu-title{padding:4px 8px 6px;font-size:11px;color:var(--dsw-alias-label-tertiary,#8291b3);letter-spacing:.08em}",
     ".dpp-menu button{display:flex;align-items:center;width:100%;padding:6px 8px;border:0;border-radius:6px;background:transparent;color:var(--dsw-alias-label-primary,#e8eefc);font:inherit;font-size:13px;text-align:left;cursor:pointer}",
     ".dpp-menu button:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,.08))}",
@@ -137,6 +137,7 @@
       var height = FRAME_H * scale;
       return h("div", {
         className: "dpp-sprite",
+        ref: props.spriteRef,
         role: "button",
         tabIndex: 0,
         title: "深海小王子 · 点击互动 / 右键菜单",
@@ -215,6 +216,7 @@
       var posRef = useRef(pos);
       var dragRef = useRef(null);
       var movedRef = useRef(false);
+      var spriteRef = useRef(null);
 
       useEffect(function () {
         var alive = true;
@@ -234,6 +236,28 @@
       useEffect(function () {
         posRef.current = pos;
       }, [pos]);
+
+      useEffect(function () {
+        function onContext(event) {
+          var el = spriteRef.current;
+          if (!el) return;
+          var rect = el.getBoundingClientRect();
+          if (
+            event.clientX >= rect.left &&
+            event.clientX <= rect.right &&
+            event.clientY >= rect.top &&
+            event.clientY <= rect.bottom
+          ) {
+            event.preventDefault();
+            event.stopPropagation();
+            setMenu({ x: event.clientX, y: event.clientY });
+          }
+        }
+        window.addEventListener("contextmenu", onContext, true);
+        return function () {
+          window.removeEventListener("contextmenu", onContext, true);
+        };
+      }, []);
 
       useEffect(function () {
         if (!cfg || !cfg.enabled) return;
@@ -365,6 +389,7 @@
           cfg: cfg,
           state: state,
           frame: frame,
+          spriteRef: spriteRef,
           onPointerDown: onPointerDown,
           onPointerMove: onPointerMove,
           onPointerUp: onPointerUp,
