@@ -36,10 +36,6 @@
     "@keyframes dpp-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}",
     ".dpp-sprite:hover{filter:drop-shadow(0 10px 18px rgba(3,8,20,.5)) brightness(1.03)}",
     ".dpp-sprite:active{cursor:grabbing}",
-    ".dpp-toolbar{position:absolute;left:50%;top:-42px;transform:translateX(-50%);display:flex;gap:2px;padding:4px;border:1px solid var(--dsw-alias-border-l2,#34415e);border-radius:10px;background:var(--dsw-alias-bg-layer-1,#111b33);box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:.92;pointer-events:auto;transition:opacity .15s ease}",
-    ".dpp-root:hover .dpp-toolbar{opacity:1}",
-    ".dpp-toolbar button{padding:4px 8px;border:0;border-radius:6px;background:transparent;color:var(--dsw-alias-label-primary,#e8eefc);font:inherit;font-size:12px;white-space:nowrap;cursor:pointer}",
-    ".dpp-toolbar button:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(255,255,255,.08))}",
     "@media (prefers-reduced-motion: reduce){.dpp-sprite{animation:none}}",
     ".dpp-menu{position:fixed;z-index:10000;min-width:148px;padding:6px;border:1px solid var(--dsw-alias-border-l2,#34415e);border-radius:10px;background:var(--dsw-alias-bg-layer-1,#111b33);box-shadow:0 12px 32px rgba(0,0,0,.45);backdrop-filter:blur(10px)}",
     ".dpp-menu-title{padding:4px 8px 6px;font-size:11px;color:var(--dsw-alias-label-tertiary,#8291b3);letter-spacing:.08em}",
@@ -158,15 +154,6 @@
         onPointerUp: props.onPointerUp,
         onPointerCancel: props.onPointerUp,
         onContextMenu: props.onContextMenu,
-        onDoubleClick: function () {
-          props.onAction("jumping");
-        },
-        onKeyDown: function (event) {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            props.onAction("waving");
-          }
-        },
       });
     }
 
@@ -363,8 +350,6 @@
         dragRef.current = null;
         if (movedRef.current) {
           writeLocalPos(posRef.current);
-        } else {
-          setState("waving");
         }
       }
 
@@ -376,14 +361,6 @@
       return h(
         "div",
         { className: "dpp-root", style: rootStyle, "data-pet": "whale-prince" },
-        h(
-          "div",
-          { className: "dpp-toolbar" },
-          h("button", { type: "button", onClick: function () { action("waving"); } }, "挥手"),
-          h("button", { type: "button", onClick: function () { action("jumping"); } }, "跳跃"),
-          h("button", { type: "button", onClick: function () { action("waiting"); } }, "等待"),
-          h("button", { type: "button", onClick: hide }, "隐藏"),
-        ),
         h(SpriteFrame, {
           cfg: cfg,
           state: state,
