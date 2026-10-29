@@ -1,6 +1,6 @@
 {
   "name": "dsh-pet-prince",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "深海小王子：DeepSeek Harness 的 2D 透明立绘桌宠插件（whale prince desktop pet for DSH）",
   "type": "module",
   "main": "index.js",
