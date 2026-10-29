@@ -140,6 +140,8 @@ v0.1 是 **Web overlay** 版本：宠物显示在 DSH 网页里，支持动画�
 
 ## GitHub
 
+仓库：<https://github.com/qian3194323719-a11y/dsh-pet-prince>
+
 本目录已经按「可直接发布」的仓库结构整理好。没有 git 二进制也可以发布：
 
 ```bash
