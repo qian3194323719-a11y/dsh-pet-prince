@@ -6,7 +6,7 @@
   if (typeof window === "undefined" || !window.__ModuleLoader__) return;
 
   var ID = "dsh-pet-prince";
-  var SPRITE = "/dsh-pet-prince/spritesheet.webp";
+  var SPRITE = "/dsh-pet-prince/spritesheet.webp?v=2";
   var CONFIG_URL = "/dsh-pet-prince/config";
   var POS_KEY = "dsh-pet-prince:position";
 

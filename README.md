@@ -1,7 +1,7 @@
 # dsh-pet-prince
 
-> 深海小王子 —— 住在 DeepSeek Harness Web UI 里的 2D 卡片式桌宠。
-> A 2D card-style desktop pet for the DeepSeek Harness Web UI.
+> 深海小王子 —— 住在 DeepSeek Harness Web UI 里的 2D 透明立绘桌宠。
+> A 2D transparent-sprite desktop pet for the DeepSeek Harness Web UI.
 
 ![preview](docs/preview.gif)
 
@@ -10,6 +10,7 @@
 ## 功能
 
 - **2D 精灵表动画**：`1536 × 1872`、8 列 × 9 行、单元格 `192 × 208`，透明背景
+- **无背景人物**：透明立绘，不再使用卡片底和帷幕背景
 - **9 个状态**：`idle` / `running-right` / `running-left` / `waving` / `jumping` / `failed` / `waiting` / `running` / `review`
 - **点击互动**：单击挥手，双击跳跃
 - **拖拽**：按住角色拖动到任意位置，位置保存在本地
