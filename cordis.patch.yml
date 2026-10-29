@@ -1,0 +1,6 @@
+# dsh-pet-prince bundle patch
+# Adds the plugin entry to the DSH profile. The id must stay unique and match
+# the package entry id used by the DSH store / plugin manager.
+- insert:
+    - id: dsh-pet-prince
+      name: 'dsh-pet-prince'
