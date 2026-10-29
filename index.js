@@ -132,7 +132,7 @@ export function apply(ctx) {
       const method = (req.method || "GET").toUpperCase();
 
       if (rest === "/health") {
-        sendJson(res, 200, { ok: true, plugin: "dsh-pet-prince", version: "0.1.0" });
+        sendJson(res, 200, { ok: true, plugin: "dsh-pet-prince", version: "0.1.1" });
         return;
       }
 
