@@ -6,13 +6,13 @@
   if (typeof window === "undefined" || !window.__ModuleLoader__) return;
 
   var ID = "dsh-pet-prince";
-  var SPRITE = "/dsh-pet-prince/spritesheet.webp?v=3";
+  var SPRITE = "/dsh-pet-prince/spritesheet.webp?v=4";
   var CONFIG_URL = "/dsh-pet-prince/config";
   var POS_KEY = "dsh-pet-prince:position";
 
   var FRAME_W = 384;
   var FRAME_H = 416;
-  var DISPLAY = 0.78;
+  var DISPLAY = 0.66;
   var COLS = 8;
   var ROWS = 9;
 
